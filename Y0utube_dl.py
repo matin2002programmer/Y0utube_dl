@@ -104,7 +104,7 @@ class Y0utube_dl:
 
 
 
-    def except_list_download(self):
+    def modified_list_download(self):
         """This function only prints modified code and real size,
         its better use this function when the self.list_download function has a exceptions (Index Error)"""
 
@@ -201,7 +201,7 @@ class Y0utube_dl:
         return my_list
 
 
-    def download_by_code(self,choice,its_dic = False,dic = dic):
+    def download_by_list_downloader(self,choice,its_dic = False,dic = dic):
 
         """This function downloads the files with the original code for us,
          if the code is not correct, an error will occur"""
@@ -225,7 +225,7 @@ class Y0utube_dl:
                 raise IndexError
 
 
-    def download_by_list_number(self,choice,its_dic = False,dic = dic):
+    def download_by_modified_list(self,choice,its_dic = False,dic = dic):
 
         """This function downloads the files with the modified code for us."""
         order_choice = int(choice)
@@ -458,7 +458,7 @@ class Y0utube_Audio(Y0utube_dl):
                 else:
                     raise IndexError
 
-    def except_audio_download(self,its_dic = False,dic = dic):
+    def modified_audio_download(self,its_dic = False,dic = dic):
 
         """This function downloads the Audio with the modified code for us."""
 
