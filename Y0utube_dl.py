@@ -57,8 +57,7 @@ class Y0utube_dl:
         for i in self.extract_info["formats"]:
             size = str(i["filesize"])
 
-
-            if not size == "None":
+            if size != "None":
 
                 if len(size) == 6:
 
@@ -66,7 +65,7 @@ class Y0utube_dl:
                     if i["height"] != None:
 
                         print(50 * "-")
-                        print(int(v), "KU", f'Code : {i["format_id"]} ', f"{i['height']}p", i["ext"])
+                        print(int(v), "KB", f'Code : {i["format_id"]} ', f"{i['height']}p", i["ext"])
 
 
                 elif len(size) == 7:
@@ -94,10 +93,11 @@ class Y0utube_dl:
                         print(50 * "-")
                         print(int(z), "Gb", f'Code : {i["format_id"]} ', f"{i['height']}p", i["ext"])
 
-
-            elif size == "None":
-                print(50 * "-")
-                print("Best",f'Code : {i["format_id"]} ',i["height"],i["ext"],"\n\n")
+        print("\n---------------","\nNone Size's:\n","Bellow ⬇⬇⬇⬇\n")
+        for i in self.extract_info["formats"]:
+            size = str(i["filesize"])
+            if size == "None":
+                print(f'Code : {i["format_id"]} ',"qulity :",i["height"],i["ext"])
 
 
         return (i["filesize"], i["format_id"], i["height"], i["ext"])
@@ -107,17 +107,20 @@ class Y0utube_dl:
     def modified_list_download(self):
         """This function only prints modified code and real size,
         its better use this function when the self.list_download function has a exceptions (Index Error)"""
-
+        
         dict_dl = {}
         size_dict = {}
 
         my_list = []
+        file_sizes = []
         all_sizes = []
+        qulity = []
 
         for list_dl in self.extract_info["formats"]:
             format_list = list_dl["format_id"]
 
             filesize = str(list_dl["filesize"])
+            file_sizes.append(filesize)
 
             if not filesize == "None":
 
@@ -126,25 +129,30 @@ class Y0utube_dl:
                     v = int(filesize) / 1000
 
                     if list_dl["height"] != None:
-                        all_sizes.append(int(v))
+                        all_sizes.append(v)
+                        qulity.append(list_dl["height"])
 
                 elif len(filesize) == 7:
+
                     w = int(filesize) / 1000000
 
                     if list_dl["height"] != None:
                         all_sizes.append(int(w))
+                        qulity.append(list_dl["height"])
 
                 elif len(filesize) == 8:
                     x = int(filesize) / 1000000
 
                     if list_dl["height"] != None:
                         all_sizes.append(int(x))
+                        qulity.append(list_dl["height"])
 
                 elif len(filesize) == 9:
                     y = int(filesize) / 1000000
 
                     if list_dl["height"] != None:
                         all_sizes.append(int(y))
+                        qulity.append(list_dl["height"])
 
 
                 elif len(filesize) == 10:
@@ -152,38 +160,56 @@ class Y0utube_dl:
 
                     if list_dl["height"] != None:
                         all_sizes.append(int(z))
+                        qulity.append(list_dl["height"])
 
-
-            elif filesize == "None":
-                print(25 * "✩")
-                print("Best Quality", f'Code : {list_dl["format_id"]} ', list_dl["height"], list_dl["ext"])
-                print(25 * "✩")
+            if filesize == 'None':
+                pass
 
 
             my_list.append(format_list)
 
-        x = 0
+        w,x, y, z = 0, 0, 0,0
         for index in my_list:
 
             dict_dl.update({x : index})
 
             x += 1
 
-        y = 0
         for item in all_sizes:
             size_dict.update({y : item})
             y += 1
 
-        z = 0
         try:
+            e = 0
             for key, val in dict_dl.items():
-                print("Size : ", size_dict[z], "Mb", end="   ")
-                print(f"Code : {key}")
-                z += 1
 
+                if type(size_dict[z]) == float:
+
+                    print("Size : ", int(size_dict[z]),"Kb"," | Qulity :",f"{qulity[z]}p",end="   ")
+                    print(f"Code : {key}")
+
+                elif file_sizes[z] == "None":
+                    print(f'Code : {key} ', "qulity :", none_quilty[z], none_type[e])
+
+
+
+
+                else:
+                    print("Size : ", size_dict[z],"Mb"," | Qulity :",f"{qulity[z]}p",end="   ")
+                    print(f"Code : {key}")
+
+                z += 1
+                e += 1
 
         except KeyError:
             pass
+
+
+        print("\n---------------", "\nNone Size's:\n\n","Bellow ⬇⬇⬇⬇\n")
+
+        if filesize == "None":
+            pass
+            # print(f'Code : {list_dl["format_id"]} ', list_dl["height"], list_dl["ext"])
 
     @property
     def return_my_list(self):
