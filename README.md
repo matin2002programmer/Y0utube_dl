@@ -8,6 +8,8 @@ download youtube-dl with this link : [youtube-dl](https://drive.google.com/file/
 
 __Remove the bin folder with all three items and insert the youtube_dl file into it. Then introduce the bin folder to your computer using system environment variables.__
 
+Your can watch this video for more helpful : [Link](https://youtu.be/vOvd-40Wzb8)
+
 Youtube_dl is a small but functional library built with the main and large youtube_dl library, in which only the video and audio download section is used.
 
 With this library (Y0utube_dl) you can download the videos and audio you need with your desired quality.
