@@ -2,7 +2,7 @@
 
 # Requirements youtube-dl , ffmpeg 
 
-download ffmpeg with this link : [ffmpeg](ffmpeg-2021-12-17-git-b780b6db64-full_build.7z)
+download ffmpeg with this link : [ffmpeg](https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-2021-12-17-git-b780b6db64-full_build.7z)
 
 download youtube-dl with this link : [youtube-dl](https://drive.google.com/file/d/1IjJHSW3ohcXpBqY_Iryta-K5mZX6lDfd/view?usp=sharing)
 
