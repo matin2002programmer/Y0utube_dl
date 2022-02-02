@@ -274,6 +274,112 @@ class Y0utube_dl:
             else:
                 raise IndexError
   
+        class Tee_Not_Recognized_Error(Exception):
+
+        """'tee' is not recognized as an internal or external command,operable program or batch file Error.
+            if You get this error 'tee' is not recognized as an internal or external command, operable program or batch file.
+            sholud download tee from this link :
+            and copy and past in system 32 in your C:\Windows\System32\drive folder """
+
+        def __init__(self, message="tee is not recognized in your C:\\Windows\\System32\\ "
+            ", Download by this link :https://drive.google.com/file/d/1Vo7pf1u7w-q13NdiBby4Nc9dGI3mT0Ud/view?usp=sharing "):
+            self.message = message
+            super().__init__(self.message)
+
+
+    def get_play_list_urls(self,create_list_urls=False):
+
+        if platform == "win32":
+
+            # if You get this error 'tee' is not recognized as an internal or external command, operable program or batch file.
+
+            # sholud download tee from this link : https://drive.google.com/file/d/1Vo7pf1u7w-q13NdiBby4Nc9dGI3mT0Ud/view?usp=sharing
+
+            # and copy and past in system 32 in your C:\Windows\System32\ drive folder
+
+            if not os.path.exists("C:\\Windows\\System32\\tee.exe"):
+                raise Tee_Not_Recognized_Error
+            else:
+                os.system(
+                    "Youtube-dl --get-id --skip-download {} | tee PlayList_id.txt".format(self.url))
+
+            if create_list_urls == True:
+                try:
+
+                    if os.path.exists("PlayList_id.txt"):
+
+                        with open('PlayList_id.txt', 'r') as istr:
+                            with open('PlayList.txt', 'w') as ostr:
+                                for line in istr:
+                                    line = "https://youtu.be/" + line.rstrip('\n')
+                                    print(line, file=ostr)
+
+                        # Using readline()
+                        f = open('PlayList.txt', 'r')
+                        count = 0
+
+                        print("\n\n<< YOUTUBE URLS BELLOW... >>\n\n")
+
+                        while True:
+                            count += 1
+
+                            # Get next line from file
+                            line = f.readline()
+
+                            # if line is empty
+                            # end of file is reached
+                            if not line:
+                                break
+                            print("Video {}: {}".format(count, line.strip()))
+
+                        f.close()
+
+
+                        os.remove("PlayList_id.txt")
+                        print("List urls created in main directory name : PlayList.txt")
+
+                except Exception as error:
+
+                    print("<< {} >>".format(error))
+
+            if create_list_urls == False:
+
+                try:
+
+                    if os.path.exists("PlayList_id.txt"):
+
+                        with open('PlayList_id.txt', 'r') as istr:
+                            with open('PlayList.txt', 'w') as ostr:
+                                for line in istr:
+                                    line = "https://youtu.be/" + line.rstrip('\n')
+                                    print(line, file=ostr)
+
+                        # Using readline()
+                        f = open('PlayList.txt', 'r')
+                        count = 0
+
+                        print("YOUTUBE URLS BELLOW...")
+
+                        while True:
+                            count += 1
+
+                            # Get next line from file
+                            line = f.readline()
+
+                            # if line is empty
+                            # end of file is reached
+                            if not line:
+                                break
+                            print("Video {}: {}".format(count, line.strip()))
+
+                        f.close()
+
+                        os.remove("PlayList_id.txt")
+                        os.remove("PlayList.txt")
+
+                except Exception as error:
+
+                    print("<< {} >>".format(error))
 
 
 
