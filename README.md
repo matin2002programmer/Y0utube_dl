@@ -18,4 +18,4 @@ Please vote for this repository to support.
 
 To contact developerl:
 
-url= https://t.me/dark_knight_Matin
+Link = [Matin](https://t.me/dark_knight_Matin)
