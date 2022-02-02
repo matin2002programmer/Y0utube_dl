@@ -16,6 +16,6 @@ You can use this library for Telegram robot or Python applications, or Python in
 
 Please vote for this repository to support.
 
-To contact developerl:
+To contact developer:
 
 Link = [Matin](https://t.me/dark_knight_Matin)
