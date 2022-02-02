@@ -91,7 +91,7 @@ class Y0utube_dl:
                     z = int(size) / 1000000
                     if i["height"] != None:
                         print(50 * "-")
-                        print(int(z), "Gb", f'Code : {i["format_id"]} ', f"{i['height']}p", i["ext"])
+                        print(round(float(z), "Gb", f'Code : {i["format_id"]} ', f"{i['height']}p", i["ext"])
 
         print("\n---------------","\nNone Size's:\n","Bellow ⬇⬇⬇⬇\n")
         for i in self.extract_info["formats"]:
