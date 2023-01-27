@@ -1,12 +1,13 @@
 import youtube_dl
+from sys import platform
 import os
 import time
 
 """Y0utube_dl is a small and comprehensive library of the major youtube_dl library,
     created solely for the convenience of downloading files from YouTube."""
 
-class Y0utube_dl:
 
+class Y0utube_dl:
     """Y0utube_dl Class only can use for download video,
     for download audio use Y0utube (subclass <<Y0utube_dl>>)
     Attention don't use Y0utube_Audio for downloading video"""
@@ -17,9 +18,8 @@ class Y0utube_dl:
     dic = ""
 
     def __init__(self,
-                 url,):
+                 url, ):
         self.url = url
-
 
     @property
     def extract_info(self):
@@ -30,8 +30,8 @@ class Y0utube_dl:
 
         with ydl:
             result = ydl.extract_info(self.url,
-                download=False  # We just want to extract the info
-            )
+                                      download=False  # We just want to extract the info
+                                      )
 
         if 'entries' in result:
             # Here we want all the entries,Can be a playlist or a list of videos
@@ -63,7 +63,6 @@ class Y0utube_dl:
 
                     v = int(size) / 1000
                     if i["height"] != None:
-
                         print(50 * "-")
                         print(int(v), "KB", f'Code : {i["format_id"]} ', f"{i['height']}p", i["ext"])
 
@@ -88,26 +87,24 @@ class Y0utube_dl:
                         print(int(y), "Mb", f'Code : {i["format_id"]} ', f"{i['height']}p", i["ext"])
 
                 elif len(size) == 10:
-                    z = int(size) / 1000000
+                    z = int(size) / 1000000000
                     if i["height"] != None:
                         print(50 * "-")
-                        print(round(float(z), "Gb", f'Code : {i["format_id"]} ', f"{i['height']}p", i["ext"])
+                        #{:.2}.format(float(z))
+                        print(round(float(z),2), "Gb", f'Code : {i["format_id"]} ', f"{i['height']}p", i["ext"])
 
-        print("\n---------------","\nNone Size's:\n","Bellow ⬇⬇⬇⬇\n")
+        print("\n---------------", "\nNone Size's:\n", "Bellow ⬇⬇⬇⬇\n")
         for i in self.extract_info["formats"]:
             size = str(i["filesize"])
             if size == "None":
-                print(f'Code : {i["format_id"]} ',"qulity :",i["height"],i["ext"])
-
+                print(f'Code : {i["format_id"]} ', "qulity :", i["height"], i["ext"])
 
         return (i["filesize"], i["format_id"], i["height"], i["ext"])
-
-
 
     def modified_list_download(self):
         """This function only prints modified code and real size,
         its better use this function when the self.list_download function has a exceptions (Index Error)"""
-        
+
         dict_dl = {}
         size_dict = {}
 
@@ -165,51 +162,45 @@ class Y0utube_dl:
             if filesize == 'None':
                 pass
 
-
             my_list.append(format_list)
 
-        w,x, y, z = 0, 0, 0,0
+        w, x, y, z = 0, 0, 0, 0
         for index in my_list:
-
-            dict_dl.update({x : index})
+            dict_dl.update({x: index})
 
             x += 1
 
         for item in all_sizes:
-            size_dict.update({y : item})
+            size_dict.update({y: item})
             y += 1
 
+        len_dl = 0
         try:
-            e = 0
+            w = 0
             for key, val in dict_dl.items():
+
+                len_dl = key
 
                 if type(size_dict[z]) == float:
 
-                    print("Size : ", int(size_dict[z]),"Kb"," | Qulity :",f"{qulity[z]}p",end="   ")
+                    print("Size : ", int(size_dict[z]), "Kb", " | Qulity :", f"{qulity[z]}p", end="   ")
                     print(f"Code : {key}")
 
-                elif file_sizes[z] == "None":
-                    print(f'Code : {key} ', "qulity :", none_quilty[z], none_type[e])
-
-
-
-
                 else:
-                    print("Size : ", size_dict[z],"Mb"," | Qulity :",f"{qulity[z]}p",end="   ")
+                    print("Size : ", size_dict[z], "Mb", " | Qulity :", f"{qulity[z]}p", end="   ")
                     print(f"Code : {key}")
 
                 z += 1
-                e += 1
+                w += 1
 
         except KeyError:
             pass
 
 
-        print("\n---------------", "\nNone Size's:\n\n","Bellow ⬇⬇⬇⬇\n")
+        print("\n---------------", "\nNone Size's:\n\n", "Bellow ⬇⬇⬇⬇\n")
 
         if filesize == "None":
-            pass
-            # print(f'Code : {list_dl["format_id"]} ', list_dl["height"], list_dl["ext"])
+            print(f'Code : {len_dl} ',"Qulity :",  list_dl["height"],"Format :", list_dl["ext"])
 
     @property
     def return_my_list(self):
@@ -226,13 +217,13 @@ class Y0utube_dl:
 
         return my_list
 
-
-    def download_by_list_downloader(self,choice,its_dic = False,dic = dic):
+    def download_by_list_downloader(self, choice, its_dic=False, dic=dic):
 
         """This function downloads the files with the original code for us,
          if the code is not correct, an error will occur"""
 
         available_formats = self.return_my_list
+
         if its_dic == False:
             if str(choice) in available_formats:
                 os.system(fr'youtube-dl -f {choice}+bestaudio -o ".\%(title)s.%(ext)s" {self.url}')
@@ -250,31 +241,29 @@ class Y0utube_dl:
             else:
                 raise IndexError
 
-
-    def download_by_modified_list(self,choice,its_dic = False,dic = dic):
+    def download_by_modified_list(self, choice, its_dic=False, dic=dic):
 
         """This function downloads the files with the modified code for us."""
         order_choice = int(choice)
 
         available_formats = self.return_my_list
+
         if its_dic == False:
-            if str(choice) in order_choice:
-                os.system(fr'youtube-dl -f {self.return_my_list[order_choice]}+bestaudio -o ".\%(title)s.%(ext)s" {self.url}')
 
-                print("\n Your Download has been completed..!!")
-            else:
-                raise IndexError
+            os.system(
+                fr'youtube-dl -f {self.return_my_list[order_choice]}+bestaudio -o "{dic}\%(title)s.%(ext)s" {self.url}')
 
+            print("\n Your Download has been completed..!!")
 
         elif its_dic == True:
-            if str(choice) in order_choice:
-                os.system(fr'youtube-dl -f {self.return_my_list[order_choice]}+bestaudio -o "{dic}\%(title)s.%(ext)s" {self.url}')
 
-                print("\n Your Download has been completed..!!")
-            else:
-                raise IndexError
-  
-        class Tee_Not_Recognized_Error(Exception):
+            os.system(
+                fr'youtube-dl -f {self.return_my_list[order_choice]}+bestaudio -o "{dic}\%(title)s.%(ext)s" {self.url}')
+
+            print("\n Your Download has been completed..!!")
+
+
+    class Tee_Not_Recognized_Error(Exception):
 
         """'tee' is not recognized as an internal or external command,operable program or batch file Error.
             if You get this error 'tee' is not recognized as an internal or external command, operable program or batch file.
@@ -383,12 +372,13 @@ class Y0utube_dl:
 
 
 
-#Class Audio Downloader
-#_________________________________________________________________________________________________________________________________________________________________________________________
+
+
+# Class Audio Downloader
+# _________________________________________________________________________________________________________________________________________________________________________________________
 
 
 class Y0utube_Audio(Y0utube_dl):
-
     dic = ""
 
     def list_audio(self):
@@ -408,55 +398,49 @@ class Y0utube_Audio(Y0utube_dl):
                     v = int(size) / 1000
 
                     if i["height"] == None:
-
                         print(50 * "-")
 
                         i["height"] = "Audio"
-                        print(int(v) ,"KU",f'Code : {i["format_id"]} ', i['height'], i["ext"])
+                        print(int(v), "KU", f'Code : {i["format_id"]} ', i['height'], i["ext"])
 
                 elif len(size) == 7:
 
                     w = int(size) / 1000000
 
                     if i["height"] == None:
-
                         print(50 * "-")
 
                         i["height"] = "Audio"
-                        print(int(w) ,"Mb",f'Code : {i["format_id"]} ', i['height'], i["ext"])
+                        print(int(w), "Mb", f'Code : {i["format_id"]} ', i['height'], i["ext"])
 
                 elif len(size) == 8:
                     x = int(size) / 1000000
 
                     if i["height"] == None:
-
                         print(50 * "-")
 
                         i["height"] = "Audio"
-                        print(int(x) ,"Mb",f'Code : {i["format_id"]} ', i['height'], i["ext"])
+                        print(int(x), "Mb", f'Code : {i["format_id"]} ', i['height'], i["ext"])
 
 
                 elif len(size) == 9:
                     y = int(size) / 1000000
 
                     if i["height"] == None:
-
                         print(50 * "-")
 
                         i["height"] = "Audio"
-                        print(int(y) ,"Mb",f'Code : {i["format_id"]} ', i['height'], i["ext"])
+                        print(int(y), "Mb", f'Code : {i["format_id"]} ', i['height'], i["ext"])
 
                 elif len(size) == 10:
 
                     z = int(size) / 1000000
 
                     if i["height"] == None:
-
                         print(50 * "-")
 
                         i["height"] = "Audio"
-                        print(int(z) ,"Gb",f'Code : {i["format_id"]} ', i['height'], i["ext"])
-
+                        print(int(z), "Gb", f'Code : {i["format_id"]} ', i['height'], i["ext"])
 
     def except_audio_list(self):
 
@@ -481,7 +465,6 @@ class Y0utube_Audio(Y0utube_dl):
                     v = int(filesize) / 1000
 
                     if list_dl["height"] == None:
-
                         list_dl["height"] = "Audio"
                         all_sizes.append(int(v))
 
@@ -489,7 +472,6 @@ class Y0utube_Audio(Y0utube_dl):
                     w = int(filesize) / 1000000
 
                     if list_dl["height"] == None:
-
                         list_dl["height"] = "Audio"
                         all_sizes.append(int(w))
 
@@ -497,7 +479,6 @@ class Y0utube_Audio(Y0utube_dl):
                     x = int(filesize) / 1000000
 
                     if list_dl["height"] == None:
-
                         list_dl["height"] = "Audio"
                         all_sizes.append(int(x))
 
@@ -505,7 +486,6 @@ class Y0utube_Audio(Y0utube_dl):
                     y = int(filesize) / 1000000
 
                     if list_dl["height"] == None:
-
                         list_dl["height"] = "Audio"
                         all_sizes.append(int(y))
 
@@ -514,7 +494,6 @@ class Y0utube_Audio(Y0utube_dl):
                     z = int(filesize) / 1000000
 
                     if list_dl["height"] == None:
-
                         list_dl["height"] = "Audio"
                         all_sizes.append(int(z))
 
@@ -528,14 +507,13 @@ class Y0utube_Audio(Y0utube_dl):
 
         x = 0
         for index in my_list:
-
-            dict_dl.update({x : index})
+            dict_dl.update({x: index})
 
             x += 1
 
         y = 0
         for item in all_sizes:
-            size_dict.update({y : item})
+            size_dict.update({y: item})
             y += 1
 
         z = 0
@@ -564,8 +542,7 @@ class Y0utube_Audio(Y0utube_dl):
 
         return my_list
 
-
-    def download_audio(self,choice):
+    def download_audio(self, choice):
 
         """This function downloads the Audio with the original code for us,
          if the code is not correct, an error will occur"""
@@ -590,7 +567,7 @@ class Y0utube_Audio(Y0utube_dl):
                 else:
                     raise IndexError
 
-    def modified_audio_download(self,its_dic = False,dic = dic):
+    def modified_audio_download(self, its_dic=False, dic=dic):
 
         """This function downloads the Audio with the modified code for us."""
 
@@ -599,7 +576,8 @@ class Y0utube_Audio(Y0utube_dl):
         available_formats = self.return_my_list
         if its_dic == False:
             if str(choice) in order_choice:
-                os.system(fr'youtube-dl -f {self.return_my_list[order_choice]}+bestaudio -o ".\%(title)s.%(ext)s" {self.url}')
+                os.system(
+                    fr'youtube-dl -f {self.return_my_list[order_choice]}+bestaudio -o ".\%(title)s.%(ext)s" {self.url}')
 
                 print("\n Your Download has been completed..!!")
             else:
@@ -608,7 +586,8 @@ class Y0utube_Audio(Y0utube_dl):
 
         elif its_dic == True:
             if str(choice) in order_choice:
-                os.system(fr'youtube-dl -f {self.return_my_list[order_choice]}+bestaudio -o "{dic}\%(title)s.%(ext)s" {self.url}')
+                os.system(
+                    fr'youtube-dl -f {self.return_my_list[order_choice]}+bestaudio -o "{dic}\%(title)s.%(ext)s" {self.url}')
 
                 print("\n Your Download has been completed..!!")
             else:
